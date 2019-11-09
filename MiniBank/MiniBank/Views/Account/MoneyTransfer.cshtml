@@ -1,0 +1,334 @@
+﻿@model MiniBank.Models.TransactionData
+
+@{
+    ViewBag.Title = "MoneyTransfer";
+}
+
+@{
+    List<SelectListItem> myAccountsList = new List<SelectListItem>();
+    List<SelectListItem> payeeAccounts = new List<SelectListItem>();
+    SelectListGroup myAccountsGroup = new SelectListGroup() { Name = "My Accounts" };
+    SelectListGroup myPayeesGroup = new SelectListGroup() { Name = "My Payees" };
+    if (ViewBag.myAccounts != null)
+    {
+        foreach (Account item in ViewBag.myAccounts)
+        {
+            var newItem = new SelectListItem
+            {
+                Text = $"{@item.AccountName} {@item.AccountNumber} (£{@item.Amount})",
+                Value = @item.AccountNumber.ToString()
+            };
+
+            myAccountsList.Add(newItem);
+
+            newItem.Group = myAccountsGroup;
+
+            payeeAccounts.Add(newItem);
+        }
+    }
+
+    if (ViewBag.myPayees != null)
+    {
+        foreach (Account item in ViewBag.myPayees)
+        {
+            payeeAccounts.Add(new SelectListItem
+            {
+                Text = $"{@item.AccountName} {@item.AccountNumber}",
+                Value = @item.AccountNumber.ToString(),
+                Group = myPayeesGroup
+            });
+        }
+    }
+}
+
+<style>
+    @@media screen and (max-width: 1000px) {
+        #PayeesControls {
+            margin-top: 5vmin !important;
+        }
+
+        .PayeeButton {
+            width: 80% !important;
+            height: 50px !important;
+            margin: 5px auto !important;
+            display: inline-block;
+            padding: 5px !important;
+        }
+
+            .PayeeButton a div {
+                display: inline-block;
+                height: 100% !important;
+                width: 50px;
+            }
+
+            .PayeeButton a span {
+                line-height: 40px;
+                font-size: 1.5em;
+                font-weight: bold;
+                vertical-align: top;
+                height: 40px;
+                display: inline-block;
+            }
+
+        .AccountForm form {
+            margin-top: 20px !important;
+            margin-left: auto !important;
+            margin-right: auto !important;
+            min-width: 380px !important;
+        }
+    }
+
+    body {
+        font-family: 'Helvetica';
+    }
+
+    label {
+        width: 100%;
+    }
+
+    .transferContainer {
+        padding: 25px;
+    }
+
+    .AccountForm {
+        padding-left: 25px;
+    }
+
+        .AccountForm form {
+            width: fit-content;
+            background: #fff;
+            padding: 1vmin 2vmin;
+            margin: 0 auto 50px 0;
+            box-shadow: 2px 2px 3px #aaa;
+            overflow: hidden;
+            min-width: 350px;
+        }
+
+        .AccountForm label {
+            min-width: 130px;
+            text-align: left !important;
+        }
+
+        .AccountForm .check > label {
+            min-width: 127px;
+        }
+
+        .AccountForm input {
+            width: 100% !important;
+            max-width: 100%;
+        }
+
+            .AccountForm input[type="submit"] {
+                width: 100%;
+                font-weight: bold;
+                font-size: 1.1em;
+                background-color: #74f2b7;
+                border: 1px solid #6fe4a3;
+            }
+
+                .AccountForm input[type="submit"]:hover {
+                    background-color: #93ffcd;
+                    border: 1px solid #6fe4a3;
+                }
+
+                .AccountForm input[type="submit"]:active,
+                .AccountForm input[type="submit"]:focus {
+                    background-color: #50dc9a !important;
+                    border: 1px solid #57b983 !important;
+                }
+
+        .AccountForm select {
+            display: block;
+            width: 100%;
+            height: 34px;
+            padding: 6px 12px;
+            font-size: 14px;
+            line-height: 1.42857143;
+            color: #555;
+            background-color: #fff;
+            background-image: none;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+    .PayeeButton {
+        height: 240px;
+        width: 240px;
+        margin: 5px auto 20px auto;
+        box-shadow: 2px 2px 3px #aaa;
+        background-color: #74f2b7;
+        text-align: center;
+        padding: 20px;
+    }
+
+    #PayeesControls {
+        min-height: 100%;
+        min-height: 100vh;
+        display: flex;
+        flex-wrap: wrap;
+        text-align: center;
+        margin-top: 10vmin;
+    }
+
+        #PayeesControls .PayeeButton a {
+            display: block;
+            width: 100%;
+            height: 100%;
+            color: #FFF;
+            text-decoration: none;
+        }
+
+            #PayeesControls .PayeeButton a:hover {
+                color: darkslateblue;
+                text-decoration: none;
+                font-weight: bold;
+            }
+
+                #PayeesControls .PayeeButton a:hover #AddPayee {
+                    background: url(/Content/images/add_payee_hover.png);
+                    background-position: center;
+                    background-size: contain;
+                    background-repeat: no-repeat;
+                }
+
+    #AddPayee {
+        height: 80%;
+        background: url(/Content/images/add_payee.png);
+        background-position: center;
+        background-size: contain;
+        background-repeat: no-repeat;
+    }
+
+    #PayeesControls .PayeeButton a:hover #ManagePayees {
+        background: url(/Content/images/manage_payees_hover.png);
+        background-position: center;
+        background-size: contain;
+        background-repeat: no-repeat;
+    }
+
+    #ManagePayees {
+        height: 80%;
+        background: url(/Content/images/manage_payees.png);
+        background-position: center;
+        background-size: contain;
+        background-repeat: no-repeat;
+    }
+</style>
+
+
+@if ((ViewBag.Status != null && Convert.ToBoolean(ViewBag.Status)) || (ViewBag.AccountsFound != null && !Convert.ToBoolean(ViewBag.AccountsFound)))
+{
+    if (ViewBag.Message != null)
+    {
+        if (ViewBag.Success != null)
+        {
+            <div style="margin:50px;" class="alert alert-success">
+                <strong>Success: </strong>@ViewBag.Message @Html.ActionLink("My Dashboard", "Dashboard", "Home")
+            </div>
+        }
+        else
+        {
+            <div style="margin:50px;" class="alert alert-warning">
+                <strong>No Accounts: </strong>@ViewBag.Message Open a new account with us today @Html.ActionLink("Open Account", "OpenAccount", "Account")
+            </div>
+        }
+    }
+}
+else
+{
+    <div class="transferContainer">
+        <div id="PayeesControls" class="row">
+            <div style="padding-right:25px" class="col-xs-12 col-sm-12 col-md-6">
+                <div class="PayeeButton">
+                    <a href="../Account/NewPayee">
+                        <div id="AddPayee"></div>
+                        <span>Add Payee</span>
+                    </a>
+                </div>
+                <div class="PayeeButton">
+                    <a href="../Payees">
+                        <div id="ManagePayees"></div>
+                        <span>Manage Payees</span>
+                    </a>
+                </div>
+            </div>
+            <div class="AccountForm col-xs-12 col-sm-12 col-md-6">
+
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+                @using (Html.BeginForm())
+                {
+                    @Html.AntiForgeryToken()
+
+                    <div class="form-horizontal" style="text-align:left">
+                        <h4>Make a Transfer</h4>
+                        <hr />
+                        @if (ViewBag.Message != null && ViewBag.Message != "")
+                        {
+                            if (ViewBag.Warning != null)
+                            {
+                                <div class="alert alert-warning">
+                                    <strong>Ooops! </strong>@ViewBag.Message
+                                </div>
+                            }
+                            else
+                            {
+                                <div class="alert alert-danger">
+                                    <strong>Ooops! </strong>@ViewBag.Message
+                                </div>
+                            }
+                        }
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.FromAccountNumber, htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-12">
+                                @Html.DropDownListFor(model => model.FromAccountNumber, myAccountsList, "-- Select Account --", new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.FromAccountNumber, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.ToAccountNumber, htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-12">
+                                @Html.DropDownListFor(model => model.ToAccountNumber, payeeAccounts, "-- Select Account --", new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.ToAccountNumber, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.Amount, htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-12">
+                                @Html.EditorFor(model => model.Amount, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.Amount, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.Reference, htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-12">
+                                @Html.EditorFor(model => model.Reference, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.Reference, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.Password, htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-12">
+                                @Html.EditorFor(model => model.Password, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-md-12">
+                                <input type="submit" value="Transfer" class="btn btn-default" />
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+}
+
+@Scripts.Render("~/bundles/jquery")
+@Scripts.Render("~/bundles/jqueryval")

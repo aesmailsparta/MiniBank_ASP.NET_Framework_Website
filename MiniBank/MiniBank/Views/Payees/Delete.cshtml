@@ -1,0 +1,63 @@
+﻿@model MiniBank.Payee
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+<style>
+
+    #DeleteControls a {
+        padding: 10px;
+        text-decoration: none;
+        color: #2ec751;
+        background-color: #74f2b7;
+        cursor: pointer;
+        display: inline-block;
+        height: 40px;
+        margin: 0 10px;
+        font-weight: bold;
+    }
+
+        #DeleteControls a:hover {
+            color: #74f2b7;
+            background-color: #2ec751;
+        }
+
+    #DeleteControls input[type="submit"] {
+        padding: 10px;
+        text-decoration: none;
+        color: #a94442;
+        background-color: #efa7a7;
+        cursor: pointer;
+        height: 40px;
+        outline: none;
+        border: none;
+        border-radius: 0;
+        font-weight: bold;
+    }
+
+        #DeleteControls input[type="submit"]:hover {
+            color: #efa7a7;
+            background-color: #a94442;
+        }
+</style>
+
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this payee?</h3>
+<div>
+    <h4>@Model.PayeeReference</h4>
+    <hr />
+    <dl class="dl-horizontal">
+    </dl>
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <div id="DeleteControls" class="form-actions no-color">
+            @Html.ActionLink("Cancel", "Index")
+            <input type="submit" value="Delete" class="btn btn-default" />
+        </div>
+    }
+</div>

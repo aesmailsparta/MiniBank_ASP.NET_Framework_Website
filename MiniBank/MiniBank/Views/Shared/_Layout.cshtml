@@ -1,0 +1,82 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MB MiniBank - @ViewBag.Title</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+    <style>
+        .nav > li a {
+            color: #eee !important;
+            font-weight: bold;
+            text-decoration: none;
+        }
+
+        #Logout > li:hover a {
+            color: #fa7878 !important;
+        }
+
+        #Login:hover a,
+        #SignUp:hover a {
+            color: #74f2b7 !important;
+        }
+    </style>
+</head>
+<body>
+    <div style="background-color:#204397" class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                @Html.ActionLink("MB MiniBank", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    @if (Request.IsAuthenticated)
+                    {
+                        <li>@Html.ActionLink("My Dashboard", "Dashboard", "Home")</li>
+                    }
+                </ul>
+
+                @if (Request.IsAuthenticated)
+                {
+                    <ul id="Logout" style="float:right; padding-right:4vmin" class="nav navbar-nav">
+                        <li>
+                            @using (Html.BeginForm("Logout", "User", FormMethod.Post, new { id = "logoutForm" }))
+                            {
+                                <a style="height: 50px;vertical-align: super; display: block;line-height: 50px;" href="javascript:document.getElementById('logoutForm').submit()">Logout</a>
+                            }
+                        </li>
+                    </ul>
+                }
+
+                @if (!Request.IsAuthenticated)
+                {
+                    <ul style="float:right; padding-right:4vmin" class="nav navbar-nav">
+
+                        <li id="Login">@Html.ActionLink("Sign Up", "Registration", "User")</li>
+                        <li id="SignUp">@Html.ActionLink("Login", "Login", "User")</li>
+
+                    </ul>
+                }
+            </div>
+        </div>
+    </div>
+
+    <div class="container body-content">
+        @RenderBody()
+    </div>
+
+    <footer>
+        @*<p>&copy; @DateTime.Now.Year - MB MINIBANK &copy;</p>*@
+    </footer>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("Scripts", false)
+</body>
+</html>

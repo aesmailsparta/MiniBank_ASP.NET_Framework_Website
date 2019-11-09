@@ -1,0 +1,171 @@
+﻿@model MiniBank.User
+
+@{
+    ViewBag.Title = "Registration";
+}
+<style>
+    body {
+        font-family: 'Helvetica';
+    }
+
+    form {
+        width: fit-content;
+        background: #fff;
+        padding: 1vmin 2vmin;
+        margin: 50px auto;
+        box-shadow: 2px 2px 3px #aaa;
+        overflow: hidden;
+        min-width: 550px;
+        animation: Appear 1s linear;
+    }
+
+    @@keyframes Appear {
+        0% {
+            opacity: 0;
+        }
+
+        100% {
+            opacity: 1;
+        }
+    }
+
+    @@media only screen and (max-width: 750px) {
+        form {
+            min-width: 430px;
+        }
+    }
+
+    label {
+        min-width: 150px;
+        text-align: left !important;
+    }
+
+    .check > label {
+        min-width: 125px;
+    }
+
+    input {
+        width: 100% !important;
+        max-width: 100%;
+    }
+
+        input[type="submit"] {
+            width: 100%;
+            font-weight: bold;
+            margin: 15px 0;
+            font-size: 1.1em;
+            background-color: #74f2b7;
+            border: 1px solid #6fe4a3;
+        }
+
+            input[type="submit"]:hover {
+                background-color: #93ffcd;
+                border: 1px solid #6fe4a3;
+            }
+
+            input[type="submit"]:active,
+            input[type="submit"]:focus {
+                background-color: #50dc9a !important;
+                border: 1px solid #57b983 !important;
+            }
+</style>
+
+@if (ViewBag.Status != null && Convert.ToBoolean(ViewBag.Status))
+{
+    if (ViewBag.Message != null)
+    {
+        <div style="margin:50px;" class="alert alert-success">
+            <strong>Success!</strong>@ViewBag.Message
+        </div>
+    }
+}
+else
+{
+    using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-horizontal">
+            <div style="
+    height: 100px;
+    width: 110%;
+    background: #b8dff5;
+    margin: -15px 0 30px -15px;
+"> <h2 style="text-align:center;margin: 0;padding: 40px; font-weight:bold;">Register</h2></div>
+
+            @if (TempData["EmailExists"] != null && TempData["EmailExists"] != "")
+            {
+                <div class="alert alert-danger">
+                    <strong>Ooops! </strong>@TempData["EmailExists"]
+                </div>
+            }
+
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+            <div style="padding:0 30px;">
+                <div class="form-group">
+                    @Html.LabelFor(model => model.FirstName, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-12">
+                        @Html.EditorFor(model => model.FirstName, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.FirstName, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.LastName, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-12">
+                        @Html.EditorFor(model => model.LastName, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.LastName, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-12">
+                        @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.DateOfBirth, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-12">
+                        @Html.EditorFor(model => model.DateOfBirth, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.DateOfBirth, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Password, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-12">
+                        @Html.EditorFor(model => model.Password, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.ConfirmPassword, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-12">
+                        @Html.EditorFor(model => model.ConfirmPassword, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.ConfirmPassword, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-md-12">
+                        <input type="submit" value="Sign Up" class="btn btn-default" />
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+
+
+    @*<script src="~/Scripts/jquery-3.4.1.min.js"></script>
+        <script src="~/Scripts/jquery.validate.min.js"></script>
+        <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>*@
+}
+
+@Scripts.Render("~/bundles/jquery")
+@Scripts.Render("~/bundles/jqueryval")

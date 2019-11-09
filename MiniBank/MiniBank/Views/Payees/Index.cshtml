@@ -1,0 +1,128 @@
+﻿@model IEnumerable<MiniBank.Models.PayeeDetails>
+
+@{
+    ViewBag.Title = "MyPayees";
+}
+<style>
+    .PayeeHolder {
+        height: 200px;
+    }
+
+        .PayeeHolder .Account {
+            color: #FFF;
+            height: 70%;
+            width: 100%;
+            background-color: #74f2b7;
+            text-align: center;
+            font-size: 4rem;
+        }
+
+        .PayeeHolder div {
+            position: relative;
+        }
+
+            .PayeeHolder div span {
+                height: 100%;
+                display: block;
+                line-height: 135px;
+            }
+
+            .PayeeHolder div div {
+                position: absolute;
+                right: 0;
+                bottom: 0;
+                color: #efa7a7;
+                font-size: 0.35em;
+            }
+
+                .PayeeHolder div div a {
+                    color: #efa7a7;
+                    text-decoration: none;
+                    padding: 5px;
+                }
+
+                    .PayeeHolder div div a:hover {
+                        color: #be5353;
+                        background-color: #efa7a7;
+                    }
+
+    .PayeeControls {
+        height: 50px;
+    }
+
+        .PayeeControls a {
+            padding: 10px;
+            text-decoration: none;
+            background-color: #bdedef;
+            cursor: pointer;
+        }
+
+            .PayeeControls a:hover {
+                font-weight: bold;
+                background-color: #84c4c7;
+            }
+</style>
+
+@if (Model.Count() == 0)
+{
+    <h3>No currently set payees</h3>
+    <p>
+        @Html.ActionLink("Create New", "NewPayee", "Account")
+    </p>
+
+}
+else
+{
+    <h2>Current Payees</h2>
+
+    <p class="PayeeControls">
+        @Html.ActionLink("Add new payee", "NewPayee", "Account")
+        @Html.ActionLink("Make a transfer", "MoneyTransfer", "Account")
+        @*@Html.ActionLink("Create New", "Create")*@
+    </p>
+    @*<table class="table">
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.PayeeAccountID)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.PayeeReference)
+                </th>
+                <th></th>
+            </tr>
+
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.PayeeAccountID)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.PayeeReference)
+                    </td>
+                    <td>
+                        @Html.ActionLink("Delete", "Delete", new { id=item.PayeeID })
+                    </td>
+                </tr>
+            }
+
+        </table>*@
+
+
+    <div style="flex-wrap:wrap;" class="row">
+        @foreach (var item in Model)
+        {
+            <div class="col-lg-3">
+                <div class="PayeeHolder">
+                    <div class="Account">
+                        <span>Acc: @Html.DisplayFor(modelItem => item.account.AccountNumber)</span>
+                        <div>@Html.ActionLink("Delete", "Delete", new { id = item.payee.PayeeID })</div>
+                    </div>
+
+                    <div style="font-size:0.8em; color:#24242b; background-color:#f0f5f8;">Added: @item.payee.DateCreated.Value.ToString("dd/MM/yyyy")</div>
+                    <div style="font-size:0.9em; color:#24242b; font-weight:bold; background-color:#f0f5f8;">@Html.DisplayFor(modelItem => item.payee.PayeeReference)</div>
+                </div>
+            </div>
+        }
+    </div>
+}

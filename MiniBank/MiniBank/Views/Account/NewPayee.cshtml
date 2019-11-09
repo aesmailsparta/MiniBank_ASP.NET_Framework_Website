@@ -1,0 +1,137 @@
+﻿@model MiniBank.Models.NewPayee
+@{
+    ViewBag.Title = "NewPayee";
+}
+<style>
+    body {
+        font-family: 'Helvetica';
+    }
+
+    .AccountForm form {
+        width: fit-content;
+        background: #fff;
+        padding: 1vmin 2vmin;
+        margin: 50px auto;
+        box-shadow: 2px 2px 3px #aaa;
+        overflow: hidden;
+        min-width: 400px;
+    }
+
+    .AccountForm label {
+        min-width: 60px;
+        width: 100%;
+        text-align: left !important;
+    }
+
+    .AccountForm .check > label {
+        min-width: 127px;
+    }
+
+    .AccountForm input {
+        width: 100% !important;
+        max-width: 100%;
+    }
+
+        .AccountForm input[type="submit"] {
+            width: 100%;
+            font-weight: bold;
+            font-size: 1.1em;
+            background-color: #74f2b7;
+            border: 1px solid #6fe4a3;
+        }
+
+            .AccountForm input[type="submit"]:hover {
+                background-color: #93ffcd;
+                border: 1px solid #6fe4a3;
+            }
+
+            .AccountForm input[type="submit"]:active,
+            .AccountForm input[type="submit"]:focus {
+                background-color: #50dc9a !important;
+                border: 1px solid #57b983 !important;
+            }
+
+    .PayeeControls {
+        height: 50px;
+    }
+
+        .PayeeControls a {
+            padding: 10px;
+            text-decoration: none;
+            background-color: #bdedef;
+            cursor: pointer;
+        }
+
+            .PayeeControls a:hover {
+                font-weight: bold;
+                background-color: #84c4c7;
+            }
+</style>
+<h2>Add Payee</h2>
+
+<p class="PayeeControls">
+    @Html.ActionLink("Manage Payees", "", "Payees")
+    @Html.ActionLink("Make a transfer", "MoneyTransfer", "Account")
+    @*@Html.ActionLink("Create New", "Create")*@
+</p>
+
+@if (ViewBag.Message != null)
+{
+    if (ViewBag.Status != null && Convert.ToBoolean(ViewBag.Status))
+    {
+        <div style="margin:50px;" class="alert alert-success">
+            <strong>Success: </strong>@ViewBag.Message @Html.ActionLink("My Payees", "", "Payees")
+        </div>
+    }
+    else
+    {
+        <div style="margin:50px;" class="alert alert-warning">
+            <strong>Payee addition failed: </strong>@Html.Raw(@ViewBag.Message)
+        </div>
+    }
+}
+
+<div class="AccountForm">
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-horizontal">
+            <hr />
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            <div class="form-group">
+                @Html.LabelFor(model => model.PayeeReference, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.PayeeReference, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.PayeeReference, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.PayeeAccount, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.PayeeAccount, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.PayeeAccount, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Password, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Password, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="Add Payee" class="btn btn-default" />
+                </div>
+            </div>
+        </div>
+    }
+</div>
+
+@Scripts.Render("~/bundles/jquery")
+@Scripts.Render("~/bundles/jqueryval")

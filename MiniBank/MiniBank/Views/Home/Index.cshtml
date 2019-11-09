@@ -1,0 +1,205 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+}
+
+<style>
+    .AccountHomeControl {
+        height: 100px;
+        width: 80%;
+        text-align: center;
+        color: #FFF;
+        line-height: 1.25;
+        background: #7af8c3;
+        box-shadow: 1px 1px 3px #aaa;
+        margin: 3vmin auto;
+    }
+
+        .AccountHomeControl a {
+            display: block;
+            width: 100%;
+            height: 100%;
+            color: #FFF;
+            text-decoration: none;
+        }
+
+            .AccountHomeControl a:hover {
+                color: darkslateblue;
+                text-decoration: none;
+                font-weight: bold;
+            }
+
+                .AccountHomeControl a:hover .PayeesButton {
+                    background: url(/Content/images/money_transfer_hover.png);
+                    background-position: center;
+                    background-size: contain;
+                    background-repeat: no-repeat;
+                }
+
+    .PayeesButton {
+        height: 80%;
+        background: url(/Content/images/money_transfer.png);
+        background-position: center;
+        background-size: contain;
+        background-repeat: no-repeat;
+    }
+
+    .AccountHomeControl a:hover .AccountButton {
+        background: url(/Content/images/add_icon_hover.png);
+        background-position: center;
+        background-size: contain;
+        background-repeat: no-repeat;
+    }
+
+    .AccountButton {
+        height: 80%;
+        background: url(/Content/images/add_icon.png);
+        background-position: center;
+        background-size: contain;
+        background-repeat: no-repeat;
+    }
+
+    .MyAccountsOverviewHolder {
+        height: 150px;
+        margin: 40px 0;
+    }
+
+    .AccountOverviewItem {
+        position: relative;
+        width: 80%;
+        margin: 0 auto;
+        margin-bottom: 50px;
+        background: #d2c6eb;
+        padding: 10px;
+        min-height: 100%;
+        color: #2d2d41;
+    }
+
+        .AccountOverviewItem a {
+            color: #2d2d41;
+        }
+
+        .AccountOverviewItem .AccountOverviewName {
+            position: absolute;
+            left: 0;
+            top: -30px;
+            padding: 5px 10px;
+            background-color: #d2c6eb;
+            font-weight: bold;
+        }
+
+    .AccountOverviewBalance {
+        height: 100%;
+        text-align: center;
+        background-color: #a390cc;
+    }
+
+        .AccountOverviewBalance .BalanceHeader {
+            height: 40px;
+            font-size: 1.2em;
+            line-height: 50px;
+        }
+
+        .AccountOverviewBalance .BalanceValue {
+            height: 90px;
+            line-height: 90px;
+            font-size: 5em;
+            font-weight: bold;
+        }
+
+    .AccountOverviewItemStats .AccountMonthOutgoing,
+    .AccountOverviewItemStats .AccountMonthIncoming,
+    .AccountOverviewItemStats .AccountMonthBalance {
+        height: 42px;
+        line-height: 32px;
+        padding: 5px;
+        font-weight: bold;
+    }
+
+    .AccountOverviewItemStats .AccountMonthOutgoing {
+        background-color: #f8bbbb;
+        color: #c23838;
+    }
+
+    .AccountOverviewItemStats .AccountMonthIncoming {
+        background-color: #8ce9c7;
+        color: #17704f;
+    }
+
+    .AccountOverviewItemStats .AccountMonthBalance {
+        background-color: #a0c3ef;
+        color: #1c467a;
+    }
+</style>
+
+<div style="text-align:center; padding:10px;" class="jumbotron">
+    <h2>MiniBank - Leading the way to your banking future</h2>
+    <h4>Save with us today!</h4>
+</div>
+<br />
+<h4 style="font-weight:bold;">Welcome @ViewBag.UserName,</h4>
+
+<div class="row">
+    <div class="col-lg-3">
+        <div style="width: 200px;" class="AccountHomeControl">
+            <a href="Home/Dashboard">
+                <span style="font-size: 4em; font-weight:bold;">@ViewBag.OpenAccounts</span><br />Open Accounts
+            </a>
+        </div>
+    </div>
+    <div class="col-lg-9">
+        <div class="row">
+            <div class="col-lg-6">
+                <div class="AccountHomeControl">
+                    <a href="../Account/OpenAccount">
+                        <div class="AccountButton"></div>
+                        <div>
+                            New account
+                        </div>
+                    </a>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="AccountHomeControl">
+                    <a href="../Account/MoneyTransfer">
+                        <div class="PayeesButton"></div>
+                        <div>
+                            Make a Transfer
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-12 MyAccountsOverviewHolder">
+        @foreach ((string AccountNumber, string AccountName, decimal? Amount, decimal? MonthOutgoing, decimal? MonthIncoming, decimal? MonthNet) item in ViewBag.AccountsOverview)
+        {
+            var today = DateTime.Now;
+            <div class="AccountOverviewItem">
+                <a href="~/Home/Dashboard">
+                    <div class="AccountOverviewName">@item.AccountName (Account: @item.AccountNumber)</div>
+                    <div class="col-md-5 AccountOverviewBalance">
+                        <div class="BalanceHeader">Current Balance:</div>
+                        <div class="BalanceValue">&pound;@item.Amount</div>
+                    </div>
+                    <div class="col-md-7 AccountOverviewItemStats">
+                        <div class="AccountMonthOutgoing">@today.ToString("MMM yyyy") Outgoings: &pound;@item.MonthOutgoing</div>
+                        <div class="AccountMonthIncoming">@today.ToString("MMM yyyy") Income: &pound;@item.MonthIncoming</div>
+                        <div class="AccountMonthBalance">@today.ToString("MMM yyyy") Net: &pound;@item.MonthNet</div>
+                    </div>
+                </a>
+            </div>
+        }
+    </div>
+</div>
+
+
+@*<p>Thank you for registering</p>*@
+
+@*@if (Request.IsAuthenticated)
+    {
+        using(Html.BeginForm("Logout","User", FormMethod.Post, new { id = "logoutForm" }))
+        {
+            <a href="javascript:document.getElementById('logoutForm').submit()">Logout</a>
+        }
+    }*@
