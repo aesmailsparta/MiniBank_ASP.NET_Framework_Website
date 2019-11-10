@@ -1,12 +1,12 @@
 # MiniBank Website
-A simple online banking simulation website created using ASP.NET Framework with MVC (No focus on design)  
+A simple online banking simulation website created using ASP.NET Framework with MVC  
 
 ![alt text](https://raw.githubusercontent.com/aesmailsparta/MiniBank_ASP.NET_Framework_Website/master/Screenshots/MiniBankOverview_Thumbnail.png "MiniBank Screenshots All")  
 
-#### Technologies
+## Technologies
 C#, Javascript, CSS, HTML
 
-#### Features
+## Features
 * Login/Registration
 * Verification email sent out on successful registration
 * Resend activation email, if requested
@@ -21,19 +21,31 @@ C#, Javascript, CSS, HTML
 * Remove Payees that are no longer needed
 
 
-#### Code Highlights
+## Code Highlights
 
-Data validation example using data annotations
-With a custom validation attribute created which makes sure the date selected is not a future date
-```c#
-```
+#### Overview
 
-Small sample from the forgot password code, which shows how the OTP is created and sent out
-```c#
-```
+###### HomeController -> Logged in user accessible pages and data output
+###### User Contoller -> User management i.e. login, sign up, resend validation, forgot password
+###### AccountController -> Bank account management i.e. money transfer, open new account
+###### PayeeController -> Payee management i.e. CRUD functions for a Payee  
+
+#### Data Validation 
+Here you can see how i used data annotations for input validation
+There is also a custom validation attribute I created which makes sure the date selected is not a future date  
+
+[Transaction Data Model With Data Annotations Example](https://github.com/aesmailsparta/MiniBank_ASP.NET_Framework_Website/blob/master/MiniBank/MiniBank/Models/TransactionData.cs "Data Annotations")  
+
+[User Model With Custom Data Annotation Example](https://github.com/aesmailsparta/MiniBank_ASP.NET_Framework_Website/blob/master/MiniBank/MiniBank/Models/Extended/User.cs "Custom Data Annotations")  
+
+#### Forgot Password OTP
+You can find the logic for my forgot password OTP code on *lines 284 - 449*, which shows how the OTP is created and sent out.
+*Lines 505 - 553* in the same controller is the function for the actual sending of the email  
+
+[User Model With Custom Data Annotation Example](https://github.com/aesmailsparta/MiniBank_ASP.NET_Framework_Website/blob/master/MiniBank/MiniBank/Controllers/UserController.cs "Custom Data Annotations")  
 
 
-#### ScreenShots
+## ScreenShots
 
 ![alt text](https://raw.githubusercontent.com/aesmailsparta/MiniBank_ASP.NET_Framework_Website/master/Screenshots/Dashboard_Overview.png "MiniBank Screenshot - Dashboard Overview")  
 
