@@ -1,4 +1,4 @@
-# MiniBank Website
+# MiniBank Website (C#/ASP.NET)
 A simple online banking simulation website created using ASP.NET Framework with MVC  
 
 ![alt text](https://raw.githubusercontent.com/aesmailsparta/MiniBank_ASP.NET_Framework_Website/master/Screenshots/MiniBankOverview_Thumbnail.png "MiniBank Screenshots All")  
