@@ -1,8 +1,7 @@
-# MiniBank_ASP.NET_Framework_Website
-A simple online banking simulation website (No focus on design)
+# MiniBank Website
+A simple online banking simulation website created using ASP.NET Framework with MVC (No focus on design)  
 
-
-![alt text](https://raw.githubusercontent.com/aesmailsparta/MiniBank_ASP.NET_Framework_Website/master/Screenshots/MiniBankOverview.png "MiniBank Screenshots All")
+![alt text](https://raw.githubusercontent.com/aesmailsparta/MiniBank_ASP.NET_Framework_Website/master/Screenshots/MiniBankOverview_Thumbnail.png "MiniBank Screenshots All")  
 
 #### Technologies
 C#, Javascript, CSS, HTML
@@ -36,10 +35,10 @@ Small sample from the forgot password code, which shows how the OTP is created a
 
 #### ScreenShots
 
-![alt text](https://raw.githubusercontent.com/aesmailsparta/MiniBank_ASP.NET_Framework_Website/master/Screenshots/Dashboard_Overview.png "MiniBank Screenshot - Dashboard Overview")
+![alt text](https://raw.githubusercontent.com/aesmailsparta/MiniBank_ASP.NET_Framework_Website/master/Screenshots/Dashboard_Overview.png "MiniBank Screenshot - Dashboard Overview")  
 
-![alt text](https://raw.githubusercontent.com/aesmailsparta/MiniBank_ASP.NET_Framework_Website/master/Screenshots/Accounts.png "MiniBank Screenshot - Accounts Dashboard")
+![alt text](https://raw.githubusercontent.com/aesmailsparta/MiniBank_ASP.NET_Framework_Website/master/Screenshots/Accounts.png "MiniBank Screenshot - Accounts Dashboard")  
 
-![alt text](https://raw.githubusercontent.com/aesmailsparta/MiniBank_ASP.NET_Framework_Website/master/Screenshots/TransferMoney.png "MiniBank Screenshot - Money Transfer")
+![alt text](https://raw.githubusercontent.com/aesmailsparta/MiniBank_ASP.NET_Framework_Website/master/Screenshots/TransferMoney.png "MiniBank Screenshot - Money Transfer")  
 
 ![alt text](https://raw.githubusercontent.com/aesmailsparta/MiniBank_ASP.NET_Framework_Website/master/Screenshots/Login(Validation).png "MiniBank Screenshot - Customer Login (With Validation)")
