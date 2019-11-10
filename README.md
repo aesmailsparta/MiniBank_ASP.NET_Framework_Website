@@ -42,7 +42,7 @@ There is also a custom validation attribute I created which makes sure the date 
 You can find the logic for my forgot password OTP code on *lines 284 - 449*, which shows how the OTP is created and sent out.
 *Lines 505 - 553* in the same controller is the function for the actual sending of the email  
 
-[User Model With Custom Data Annotation Example](https://github.com/aesmailsparta/MiniBank_ASP.NET_Framework_Website/blob/master/MiniBank/MiniBank/Controllers/UserController.cs "Custom Data Annotations")  
+[User Controller - Forgot Password Logic Example](https://github.com/aesmailsparta/MiniBank_ASP.NET_Framework_Website/blob/master/MiniBank/MiniBank/Controllers/UserController.cs "Custom Data Annotations")  
 
 
 ## ScreenShots
