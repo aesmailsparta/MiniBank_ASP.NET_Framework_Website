@@ -1,2 +1,2 @@
-MiniBank/MiniBank/Content* linguist-vendored
-MiniBank/MiniBank/Scripts* linguist-vendored
+MiniBank/MiniBank/Content/* linguist-vendored
+MiniBank/MiniBank/Scripts/* linguist-vendored
